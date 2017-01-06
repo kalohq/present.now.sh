@@ -213,10 +213,6 @@ boom@2.x.x:
   dependencies:
     hoek "2.x.x"
 
-bower:
-  version "1.8.0"
-  resolved "https://registry.yarnpkg.com/bower/-/bower-1.8.0.tgz#55dbebef0ad9155382d9e9d3e497c1372345b44a"
-
 brace-expansion@^1.0.0:
   version "1.1.6"
   resolved "https://registry.yarnpkg.com/brace-expansion/-/brace-expansion-1.1.6.tgz#7197d7eaa9b87e648390ea61fc66c84427420df9"
@@ -841,6 +837,10 @@ find-up@^1.0.0:
   dependencies:
     path-exists "^2.0.0"
     pinkie-promise "^2.0.0"
+
+"font-roboto@https://github.com/PolymerElements/font-roboto/archive/v1.0.1.tar.gz":
+  version "1.0.1"
+  resolved "https://github.com/PolymerElements/font-roboto/archive/v1.0.1.tar.gz#70a48fbce6611fb27c79c9d7689c25b20b06ccc8"
 
 for-in@^0.1.5:
   version "0.1.6"

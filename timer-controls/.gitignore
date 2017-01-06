@@ -2,4 +2,5 @@
 !/elm-stuff/exact-dependencies.json
 /node_modules/
 /bundle.js
-/vendor
+/bower_components
+yarn-error.log
