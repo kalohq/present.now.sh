@@ -8,10 +8,8 @@
   },
   "author": "Tomek Wiszniewski <t.wiszniewski@gmail.com>",
   "license": "MIT",
-  "dependencies": {
-    "font-roboto": "https://github.com/PolymerElements/font-roboto/archive/v1.0.1.tar.gz"
-  },
   "devDependencies": {
+    "bower": "^1.8.0",
     "elm": "^0.18.0",
     "elm-live": "^2.6.2"
   }
