@@ -1,0 +1,10 @@
+#! /bin/bash -ex
+
+local="$(dirname "$0")"/../node_modules/.bin
+
+"$local"/elm-live \
+  source/Main.elm \
+  --output=bundle.js \
+  --path-to-elm-make="$local"/elm-make \
+  --port=3081 \
+  "$@"
