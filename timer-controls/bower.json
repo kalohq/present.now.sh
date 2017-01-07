@@ -1,6 +1,7 @@
 {
   "name": "present.now.sh",
   "dependencies": {
-    "font-roboto": "PolymerElements/font-roboto#^1.0.1"
+    "font-roboto": "PolymerElements/font-roboto#^1.0.1",
+    "paper-swatch-picker": "PolymerElements/paper-swatch-picker#^1.0.2"
   }
 }

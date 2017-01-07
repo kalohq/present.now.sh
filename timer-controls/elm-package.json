@@ -5,6 +5,7 @@
     "license": "MIT",
     "source-directories": [
         "source",
+        "source/vendor",
         "build/styles"
     ],
     "exposed-modules": [],

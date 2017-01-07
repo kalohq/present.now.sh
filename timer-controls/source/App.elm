@@ -1,8 +1,22 @@
 module App exposing (model, view, update, css, namespace, Message, Model)
 
-import Css exposing ((.), rgb, Snippet, color)
-import Html exposing (text, h1, Html)
+import Css
+    exposing
+        ( (.)
+        , rgb
+        , Snippet
+        , color
+        , fontFamilies
+        , fontWeight
+        , int
+        , inherit
+        , padding3
+        , px
+        , zero
+        )
+import Html exposing (text, h2, Html, div)
 import Html.CssHelpers exposing (withNamespace)
+import Html.Polymer exposing (paperSwatchPicker)
 
 
 -- MODEL
@@ -45,10 +59,15 @@ view _ =
         { class } =
             withNamespace namespace
     in
-        h1
-            [ class [ Title ]
+        div
+            [ class [ Root ]
             ]
-            [ text "Hello world!"
+            [ h2
+                [ class [ Label ]
+                ]
+                [ text "initial color"
+                ]
+            , paperSwatchPicker [] []
             ]
 
 
@@ -57,12 +76,18 @@ view _ =
 
 
 type Classes
-    = Title
+    = Root
+    | Label
 
 
 css : List Snippet
 css =
-    [ (.) Title
-        [ color (rgb 220 50 50)
+    [ (.) Root
+        [ fontFamilies [ "roboto", "sans-serif" ]
+        , fontWeight (int 300)
+        ]
+    , (.) Label
+        [ fontWeight inherit
+        , padding3 (px 30) (px 16) zero
         ]
     ]
