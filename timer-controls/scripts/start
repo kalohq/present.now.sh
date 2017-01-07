@@ -11,4 +11,5 @@ local="$scripts"/../node_modules/.bin
   --path-to-elm-make="$local"/elm-make \
   --port=3081 \
   --before-build="$scripts"/styles \
+  --after-build="$scripts"/bundle \
   "$@"
