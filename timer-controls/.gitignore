@@ -1,6 +1,7 @@
 /elm-stuff/*
 !/elm-stuff/exact-dependencies.json
 /node_modules/
-/bundle.js
+/public/bundle.js
+/public/style.css
 /bower_components
 /yarn-error.log

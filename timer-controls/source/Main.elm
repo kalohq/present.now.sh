@@ -1,12 +1,13 @@
-module Main exposing (..)
+module Main exposing (main)
 
-import Html exposing (beginnerProgram, h1, text)
+import Html exposing (beginnerProgram)
+import App
 
 
-main : Program Never () msg
+main : Program Never () App.Message
 main =
     beginnerProgram
-        { model = ()
-        , update = \_ -> \_ -> ()
-        , view = \_ -> h1 [] [ text "Hello world!" ]
+        { model = App.model
+        , update = App.update
+        , view = App.view
         }
