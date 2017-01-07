@@ -3,5 +3,8 @@
 /node_modules/
 /public/bundle.js
 /public/style.css
-/bower_components
+/bower_components/*
+!/bower_components/iron-overlay-behavior/
+/bower_components/iron-overlay-behavior/*
+!/bower_components/iron-overlay-behavior/iron-overlay-behavior.html
 /yarn-error.log
