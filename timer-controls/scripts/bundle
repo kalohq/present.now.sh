@@ -6,4 +6,4 @@ local="$component"/node_modules/.bin
 cd "$component"
 "$local"/browserify \
   build/bundle/timer-controls.js \
-  --outfile=dist/script.js
+  --outfile=../public/components/timer-controls/script.js

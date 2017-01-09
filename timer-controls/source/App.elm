@@ -7,7 +7,7 @@ import Css
         , Snippet
         , color
         , fontFamilies
-        , marginLeft
+        , margin
         , fontWeight
         , int
         , inherit
@@ -60,12 +60,8 @@ view _ =
         { class } =
             withNamespace namespace
     in
-        div
-            [ class [ Root ]
-            ]
-            [ h2
-                [ class [ Label ]
-                ]
+        div []
+            [ h2 []
                 [ text "initial color"
                 ]
             , paperSwatchPicker
@@ -80,22 +76,12 @@ view _ =
 
 
 type Classes
-    = Root
-    | Label
-    | SwatchPicker
+    = SwatchPicker
 
 
 css : List Snippet
 css =
-    [ (.) Root
-        [ fontFamilies [ "roboto", "sans-serif" ]
-        , fontWeight (int 300)
-        ]
-    , (.) Label
-        [ fontWeight inherit
-        , padding3 (px 30) zero zero
-        ]
-    , (.) SwatchPicker
-        [ marginLeft (px -16)
+    [ (.) SwatchPicker
+        [ margin (px -16)
         ]
     ]

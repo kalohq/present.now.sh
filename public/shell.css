@@ -1,0 +1,23 @@
+.control-panel {
+  font-family: roboto, sans-serif;
+  line-height: 1.5;
+  padding: 2rem;
+}
+
+.control-panel h1 {
+  font-weight: 900;
+  font-size: 3rem;
+  color: #009688;
+  padding: 1rem 0 0;
+}
+
+.control-panel .thin {
+  font-weight: 300;
+}
+
+.control-panel h2 {
+  padding-top: 3rem;
+  font-weight: 300;
+  font-size: 1.7rem;
+  padding-bottom: 0.4rem;
+}

@@ -12,7 +12,7 @@ port files : CssFileStructure -> Cmd msg
 fileStructure : CssFileStructure
 fileStructure =
     Css.File.toFileStructure
-        [ ( "dist/style.css"
+        [ ( "../public/components/timer-controls/style.css"
           , Css.File.compile
                 [ App.css |> namespace App.namespace |> stylesheet
                 ]
