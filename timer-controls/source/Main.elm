@@ -1,12 +1,12 @@
 module Main exposing (main)
 
-import Html exposing (program)
+import Html exposing (programWithFlags)
 import App
 
 
-main : Program Never App.Model App.Message
+main : Program App.Flags App.Model App.Message
 main =
-    program
+    programWithFlags
         { init = App.init
         , update = App.update
         , view = App.view

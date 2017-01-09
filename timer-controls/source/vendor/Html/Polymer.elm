@@ -1,6 +1,7 @@
 module Html.Polymer exposing (..)
 
 import Html exposing (node, Html, Attribute)
+import Html.Attributes exposing (attribute)
 
 
 type alias Node message =
@@ -10,3 +11,8 @@ type alias Node message =
 paperSwatchPicker : Node message
 paperSwatchPicker =
     node "paper-swatch-picker"
+
+
+color : String -> Attribute message
+color =
+    attribute "color"

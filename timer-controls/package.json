@@ -13,5 +13,8 @@
     "elm": "^0.18.0",
     "elm-css": "^0.6.0",
     "elm-live": "^2.7.0"
+  },
+  "dependencies": {
+    "private-parts": "^0.4.1"
   }
 }
