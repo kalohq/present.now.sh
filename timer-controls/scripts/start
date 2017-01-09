@@ -1,13 +1,15 @@
 #! /bin/bash -ex
 
 scripts="$(dirname "$0")"
-local="$scripts"/../node_modules/.bin
+component="$scripts"/..
+local="$component"/node_modules/.bin
 
+cd "$component"
 "$local"/elm-live \
   source/Main.elm \
-  --output=public/bundle.js \
+  --output=build/bundle/elm.js \
   --warn \
-  --dir=public \
+  --dir=preview \
   --path-to-elm-make="$local"/elm-make \
   --port=3081 \
   --before-build="$scripts"/styles \

@@ -1,8 +1,9 @@
 /elm-stuff/*
 !/elm-stuff/exact-dependencies.json
 /node_modules/
-/public/bundle.js
-/public/style.css
+/build/bundle/elm.js
+/dist/style.css
+/dist/script.js
 /bower_components/*
 !/bower_components/iron-overlay-behavior/
 /bower_components/iron-overlay-behavior/*

@@ -1,3 +1,9 @@
 #! /bin/bash -ex
 
-cowsay bundling
+component="$(dirname "$0")"/..
+local="$component"/node_modules/.bin
+
+cd "$component"
+"$local"/browserify \
+  build/bundle/timer-controls.js \
+  --outfile=dist/script.js

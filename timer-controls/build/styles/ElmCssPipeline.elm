@@ -12,7 +12,7 @@ port files : CssFileStructure -> Cmd msg
 fileStructure : CssFileStructure
 fileStructure =
     Css.File.toFileStructure
-        [ ( "public/style.css"
+        [ ( "dist/style.css"
           , Css.File.compile
                 [ App.css |> namespace App.namespace |> stylesheet
                 ]
