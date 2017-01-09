@@ -7,6 +7,7 @@ import Css
         , Snippet
         , color
         , fontFamilies
+        , marginLeft
         , fontWeight
         , int
         , inherit
@@ -67,7 +68,10 @@ view _ =
                 ]
                 [ text "initial color"
                 ]
-            , paperSwatchPicker [] []
+            , paperSwatchPicker
+                [ class [ SwatchPicker ]
+                ]
+                []
             ]
 
 
@@ -78,6 +82,7 @@ view _ =
 type Classes
     = Root
     | Label
+    | SwatchPicker
 
 
 css : List Snippet
@@ -88,6 +93,9 @@ css =
         ]
     , (.) Label
         [ fontWeight inherit
-        , padding3 (px 30) (px 16) zero
+        , padding3 (px 30) zero zero
+        ]
+    , (.) SwatchPicker
+        [ marginLeft (px -16)
         ]
     ]
