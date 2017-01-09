@@ -7,12 +7,14 @@
 .control-panel h1 {
   font-weight: 900;
   font-size: 3rem;
+  line-height: 0.62;
   color: #009688;
-  padding: 1rem 0 0;
+  padding: 2rem 0 0.7rem;
 }
 
 .control-panel .thin {
   font-weight: 300;
+  letter-spacing: -0.021em;
 }
 
 .control-panel h2 {
