@@ -3,7 +3,7 @@ port module Stylesheets exposing (..)
 import Css.File exposing (CssFileStructure, CssCompilerProgram)
 import Css exposing (stylesheet)
 import Css.Namespace exposing (namespace)
-import App
+import TimerControls
 
 
 port files : CssFileStructure -> Cmd msg
@@ -14,7 +14,7 @@ fileStructure =
     Css.File.toFileStructure
         [ ( "../public/components/timer-controls/style.css"
           , Css.File.compile
-                [ App.css |> namespace App.namespace |> stylesheet
+                [ TimerControls.css |> namespace TimerControls.namespace |> stylesheet
                 ]
           )
         ]

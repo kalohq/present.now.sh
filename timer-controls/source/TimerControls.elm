@@ -1,4 +1,4 @@
-port module App
+port module TimerControls
     exposing
         ( init
         , view

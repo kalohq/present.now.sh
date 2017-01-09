@@ -1,8 +1,8 @@
 var Elm = require('./elm');
-var defineCustomElement = require('./defineCustomElement.js');
+var registerElement = require('./registerElement.js');
 var _ = require('private-parts').createKey();
 
-defineCustomElement({
+registerElement({
   name: 'timer-controls',
   isBlock: true,
   lifecycle: {

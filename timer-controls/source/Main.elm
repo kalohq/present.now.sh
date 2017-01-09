@@ -1,14 +1,14 @@
 module Main exposing (main)
 
 import Html exposing (programWithFlags)
-import App
+import TimerControls
 
 
-main : Program App.Flags App.Model App.Message
+main : Program TimerControls.Flags TimerControls.Model TimerControls.Message
 main =
     programWithFlags
-        { init = App.init
-        , update = App.update
-        , view = App.view
-        , subscriptions = App.subscriptions
+        { init = TimerControls.init
+        , update = TimerControls.update
+        , view = TimerControls.view
+        , subscriptions = TimerControls.subscriptions
         }
