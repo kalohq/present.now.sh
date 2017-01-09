@@ -2,16 +2,16 @@
 
 scripts="$(dirname "$0")"
 component="$scripts"/..
-local="$component"/node_modules/.bin
-
 cd "$component"
-"$local"/elm-live \
+bin=../node_modules/.bin
+
+"$bin"/elm-live \
   source/Main.elm \
-  --output=build/bundle/elm.js \
+  --output='build/bundle/elm.js' \
   --warn \
   --dir=preview \
-  --path-to-elm-make="$local"/elm-make \
+  --path-to-elm-make="$bin"/elm-make \
   --port=3081 \
-  --before-build="$scripts"/styles \
-  --after-build="$scripts"/bundle \
+  --before-build=scripts/styles \
+  --after-build=scripts/bundle \
   "$@"

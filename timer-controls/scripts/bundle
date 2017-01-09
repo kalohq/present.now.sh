@@ -1,9 +1,9 @@
 #! /bin/bash -ex
 
 component="$(dirname "$0")"/..
-local="$component"/node_modules/.bin
-
 cd "$component"
-"$local"/browserify \
+bin=../node_modules/.bin
+
+"$bin"/browserify \
   build/bundle/timer-controls.js \
   --outfile=../public/components/timer-controls/script.js

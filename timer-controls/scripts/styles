@@ -1,6 +1,7 @@
 #! /bin/bash -e
 
-local="$(dirname "$0")"/../node_modules/.bin
-project="$(dirname "$0")"/..
+component="$(dirname "$0")"/..
+cd "$component"
+bin=../node_modules/.bin
 
-"$local"/elm-css "$project"/build/styles/ElmCssPipeline.elm
+"$bin"/elm-css build/styles/ElmCssPipeline.elm

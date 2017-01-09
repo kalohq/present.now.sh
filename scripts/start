@@ -2,14 +2,14 @@
 
 project="$(dirname "$0")"/..
 cd "$project"/timer-controls
-bin=node_modules/.bin
+bin=../node_modules/.bin
 
-$bin/elm-live \
+"$bin"/elm-live \
   source/Main.elm \
   --output=build/bundle/elm.js \
   --warn \
   --dir=../public \
-  --path-to-elm-make=$bin/elm-make \
+  --path-to-elm-make="$bin"/elm-make \
   --host=0.0.0.0 \
   --port=3003 \
   --before-build=scripts/styles \
