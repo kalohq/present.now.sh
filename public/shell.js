@@ -26,7 +26,6 @@
   ];
 
   var headerStyle = document.createElement('style');
-  headerStyle.id = 'header-style';
   headerStyle.textContent = '.control-panel h1{color:' + headerColor + '}';
   document.head.appendChild(headerStyle);
 }());
