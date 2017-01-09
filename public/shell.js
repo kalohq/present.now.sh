@@ -25,7 +25,14 @@
     Math.floor(Math.random() * vibrantMaterialColors.length)
   ];
 
+  window.presentNowSh = window.presentNowSh || {};
+
   var headerStyle = document.createElement('style');
-  headerStyle.textContent = '.control-panel h1{color:' + headerColor + '}';
   document.head.appendChild(headerStyle);
+  presentNowSh.setHeaderColor = function(color) {
+    headerStyle.textContent = '.control-panel h1{color:' + color + '}';
+  };
+  presentNowSh.setHeaderColor(headerColor);
+
+  presentNowSh.headerColor = headerColor;
 }());
