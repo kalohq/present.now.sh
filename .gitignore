@@ -1,0 +1,6 @@
+/node_modules/
+/yarn-error.log
+/bower_components/*
+!/bower_components/iron-overlay-behavior/
+/bower_components/iron-overlay-behavior/*
+!/bower_components/iron-overlay-behavior/iron-overlay-behavior.html

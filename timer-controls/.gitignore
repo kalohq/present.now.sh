@@ -4,8 +4,4 @@
 /build/bundle/elm.js
 /dist/style.css
 /dist/script.js
-/bower_components/*
-!/bower_components/iron-overlay-behavior/
-/bower_components/iron-overlay-behavior/*
-!/bower_components/iron-overlay-behavior/iron-overlay-behavior.html
 /yarn-error.log
