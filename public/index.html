@@ -3,21 +3,14 @@
 <head>
   <title>present.now.sh</title>
 
-  <style>
-    *, *::before, *::after {
-      padding: 0;
-      margin: 0;
-      box-sizing: border-box;
-    }
-  </style>
-  <link rel="stylesheet" href="shell.css" />
-  <script src="shell.js"></script>
-  <link rel="import" href="/vendor/font-roboto/roboto.html" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:900" />
-
   <meta name="viewport" content="initial-scale=1, user-scalable=no" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+
+  <link rel="import" href="style-guide/style-guide.html" />
+
+  <link rel="stylesheet" href="shell.css" />
+  <script src="shell.js"></script>
 
   <link rel="import" href="components/timer-controls/timer-controls.html" />
 </head>
@@ -44,5 +37,15 @@
     }());</script>
   </div>
 
-  <script>!function(){if("registerElement"in document&&"import"in document.createElement("link")&&"content"in document.createElement("template"));else{for(var e,n=document.querySelectorAll("link[rel=prefetch]"),r=0;r<n.length;r++)e=new XMLHttpRequest,e.open("GET",n[r].href),e.send();var t=document.createElement("script");t.src="vendor/webcomponentsjs/webcomponents-lite.min.js",document.body.appendChild(t)}}();</script>
+  <script>
+    !function(){if("registerElement"in document&&"import"in document.createElement("link")&&"content"in document.createElement("template"));else{for(var e,n=document.querySelectorAll("link[rel=prefetch]"),r=0;r<n.length;r++)e=new XMLHttpRequest,e.open("GET",n[r].href),e.send();var t=document.createElement("script");t.src="vendor/webcomponentsjs/webcomponents-lite.min.js",document.body.appendChild(t)}}();
+  </script>
+
+  <script>/*
+    window.addEventListener('HTMLImportsLoaded', function() {
+      var link = document.createElement('link');
+      link.rel = 'import';
+      link.href
+    })
+  */</script>
 </body>

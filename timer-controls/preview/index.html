@@ -3,24 +3,25 @@
 <head>
   <title>present.now.sh</title>
 
-  <link rel="import" href="/vendor/font-roboto/roboto.html" />
+  <link rel="import" href="/style-guide/style-guide.html" />
+
   <link rel="import" href="/vendor/paper-swatch-picker/paper-swatch-picker.html" />
-  <style>
-    *, *::before, *::after {
-      padding: 0;
-      margin: 0;
-      box-sizing: border-box;
-    }
-  </style>
   <link rel="stylesheet" href="style.css" />
 
   <meta name="viewport" content="initial-scale=1, user-scalable=no" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+
+  <style>
+    html {
+      padding: 2rem;
+    }
+  </style>
 </head>
 
 <body>
   <script src="elm.js"></script>
-  <script>Elm.Main.fullscreen()</script>
-  <script>!function(){if("registerElement"in document&&"import"in document.createElement("link")&&"content"in document.createElement("template"));else{for(var e,n=document.querySelectorAll("link[rel=prefetch]"),r=0;r<n.length;r++)e=new XMLHttpRequest,e.open("GET",n[r].href),e.send();var t=document.createElement("script");t.src="vendor/webcomponentsjs/webcomponents-lite.min.js",document.body.appendChild(t)}}();</script>
+  <script>
+    Elm.Main.fullscreen({initialColor: '#8BC34A'});
+  </script>
 </body>

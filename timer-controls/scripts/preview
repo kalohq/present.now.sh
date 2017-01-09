@@ -7,11 +7,10 @@ bin=../node_modules/.bin
 
 "$bin"/elm-live \
   source/Main.elm \
-  --output='build/bundle/elm.js' \
+  --output=build/bundle/elm.js \
   --warn \
   --dir=preview \
   --path-to-elm-make="$bin"/elm-make \
   --port=3081 \
   --before-build=scripts/styles \
-  --after-build=scripts/bundle \
   "$@"
