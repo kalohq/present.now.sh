@@ -6,7 +6,15 @@ defineCustomElement({
   isBlock: true,
   lifecycle: {
     createdCallback: function () {
-      Elm.Main.embed(this);
+      var element = this;
+      var app = Elm.Main.embed(element);
+
+      app.ports.sendInitialColor.subscribe(function (color) {
+        var event = new CustomEvent('initial-color', {
+          detail: {color: color},
+        });
+        element.dispatchEvent(event);
+      })
     },
   },
 });

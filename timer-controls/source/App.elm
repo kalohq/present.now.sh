@@ -1,4 +1,4 @@
-module App exposing (model, view, update, css, namespace, Message, Model)
+port module App exposing (init, view, update, subscriptions, css, namespace, Message, Model)
 
 import Html exposing (text, h2, Html, div)
 import Html.CssHelpers exposing (withNamespace)
@@ -26,12 +26,16 @@ import Css
 
 
 type alias Model =
-    ()
+    { initialColor : String
+    }
 
 
-model : Model
-model =
-    ()
+init : ( Model, Cmd message )
+init =
+    ( { initialColor = "#000000"
+      }
+    , Cmd.none
+    )
 
 
 
@@ -42,11 +46,22 @@ type Message
     = PickInitialColor String
 
 
-update : Message -> Model -> Model
+update : Message -> Model -> ( Model, Cmd message )
 update message model =
     case message of
         PickInitialColor color ->
-            model
+            { model
+                | initialColor = color
+            }
+                ! [ sendInitialColor color ]
+
+
+port sendInitialColor : String -> Cmd message
+
+
+subscriptions : Model -> Sub Message
+subscriptions _ =
+    Sub.none
 
 
 

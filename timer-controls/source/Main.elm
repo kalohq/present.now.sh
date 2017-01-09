@@ -1,13 +1,14 @@
 module Main exposing (main)
 
-import Html exposing (beginnerProgram)
+import Html exposing (program)
 import App
 
 
-main : Program Never () App.Message
+main : Program Never App.Model App.Message
 main =
-    beginnerProgram
-        { model = App.model
+    program
+        { init = App.init
         , update = App.update
         , view = App.view
+        , subscriptions = App.subscriptions
         }
