@@ -1,7 +1,3 @@
 /elm-stuff/*
 !/elm-stuff/exact-dependencies.json
-/node_modules/
 /build/bundle/elm.js
-/dist/style.css
-/dist/script.js
-/yarn-error.log
