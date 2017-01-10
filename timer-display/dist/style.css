@@ -1,0 +1,11 @@
+timer-display {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: black;
+  color: white;
+
+  font-size: 35vw;
+  font-weight: 500;
+}

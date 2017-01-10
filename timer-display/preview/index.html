@@ -5,23 +5,23 @@
 
   <link rel="import" href="/style-guide/style-guide.html" />
 
-  <link rel="import" href="/vendor/paper-swatch-picker/paper-swatch-picker.html" />
-  <link rel="stylesheet" href="timer-control/style.css" />
+  <link rel="import" href="timer-display/timer-display.html" />
 
   <meta name="viewport" content="initial-scale=1, user-scalable=no" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
 
   <style>
-    html {
-      padding: 2rem;
+    timer-display {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
     }
   </style>
 </head>
 
 <body>
-  <script src="/vendor/react/react.min.js"></script>
-  <script src="/vendor/react/react-dom.min.js"></script>
-  <script src="timer-control/script.js"></script>
   <timer-display />
 </body>

@@ -50,7 +50,9 @@
 
       return (
         h('div', null,
-          minutes + ':' + seconds
+          h('div', null,
+            minutes + ':' + seconds
+          )
         )
       );
     },
@@ -90,13 +92,4 @@
   };
 
   document.registerElement('timer-display', { prototype: TimerDisplayElement });
-
-  var style = document.createElement('style');
-  style.textContent = 'timer-display{' + [
-    'position:absolute',
-    'top:0',
-    'right:0',
-    'bottom:0',
-    'left:0',
-  ].join(';') + '}';
 }());
