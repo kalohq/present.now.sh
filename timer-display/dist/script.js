@@ -51,11 +51,15 @@
 
       return (
         h('div', {
-          className: 'background',
+          className: ('timer-display›background' +
+            (!this.props.paused ? (
+              ' timer-display›background»shown'
+            ) : '')
+          ),
           style: { backgroundColor: this.props.defaultColor },
         },
           h('div', {
-            className: 'display',
+            className: 'timer-display›display',
           },
             minutes + ':' + seconds
           )
