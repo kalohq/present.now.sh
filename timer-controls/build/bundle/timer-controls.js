@@ -20,6 +20,12 @@ registerElement({
         }));
       });
 
+      app.ports.sendColorBreakpoints.subscribe(function(breakpoints) {
+        element.dispatchEvent(new CustomEvent('color-breakpoints', {
+          detail: {breakpoints: breakpoints},
+        }));
+      });
+
       app.ports.startTimer.subscribe(function() {
         element.dispatchEvent(new Event('start-timer'));
       });

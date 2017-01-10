@@ -56,6 +56,7 @@ type Message
     | ReceiveInitialColor (Maybe String)
     | StartTimer
     | AddColorBreakpoint
+    | SetBreakpointColor Int String
 
 
 update : Message -> Model -> ( Model, Cmd message )
@@ -85,8 +86,22 @@ update message model =
             }
                 ! []
 
+        SetBreakpointColor index color ->
+            let
+                colorBreakpoints =
+                    Dict.update
+                        index
+                        (Maybe.map <| \breakpoint -> { breakpoint | color = color })
+                        model.colorBreakpoints
+            in
+                { model | colorBreakpoints = colorBreakpoints }
+                    ! [ sendColorBreakpoints (Dict.values colorBreakpoints) ]
+
 
 port sendInitialColor : String -> Cmd message
+
+
+port sendColorBreakpoints : List ColorBreakpoint -> Cmd message
 
 
 port startTimer : Bool -> Cmd message
@@ -175,7 +190,7 @@ colorPicker messageWithColor pickedColor =
 
 
 colorBreakpoint : ( Int, ColorBreakpoint ) -> List (Html Message)
-colorBreakpoint ( id, breakpoint ) =
+colorBreakpoint ( breakpointIndex, breakpoint ) =
     let
         timeChunk number =
             String.padLeft 2 '0' (toString number)
@@ -183,20 +198,19 @@ colorBreakpoint ( id, breakpoint ) =
         [ h2 []
             [ text "at "
             , inlineInput
-                ([ placeholder "mm"
-                 , value (timeChunk <| breakpoint.seconds // 60)
+                ([ value (timeChunk <| breakpoint.seconds // 60)
                  ]
                     ++ (autofocus True)
                 )
                 []
             , text ":"
             , inlineInput
-                [ placeholder "ss"
-                , value (timeChunk <| breakpoint.seconds % 60)
+                [ value (timeChunk <| breakpoint.seconds % 60)
                 ]
                 []
             , text ", set the color to"
             ]
+        , colorPicker (SetBreakpointColor breakpointIndex) breakpoint.color
         ]
 
 
