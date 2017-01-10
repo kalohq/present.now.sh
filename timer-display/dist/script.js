@@ -10,6 +10,7 @@
     propTypes: {
       paused: PropTypes.bool.isRequired,
       defaultColor: PropTypes.string.isRequired,
+      pause: PropTypes.func.isRequired,
     },
 
     getInitialState: function() {
@@ -42,6 +43,8 @@
     },
 
     render: function() {
+      var component = this;
+
       var secondsElapsed = Math.floor(this.state.millisecondsElapsed / 1000);
       var seconds = ('00' + secondsElapsed % 60).slice(-2);
       var minutes = ('00' + Math.min(
@@ -62,6 +65,14 @@
             className: 'timer-display›display',
           },
             minutes + ':' + seconds
+          ),
+          h('div', {
+            className: 'timer-display›controls',
+          },
+            h('paper-icon-button', {
+              icon: 'av:pause',
+              onClick: function() { component.props.pause(); },
+            })
           )
         )
       );
@@ -76,6 +87,7 @@
       h(TimerDisplay, {
         paused: element.getAttribute('paused') !== null,
         defaultColor: element.getAttribute('default-color') || '#000000',
+        pause: function() { element.setAttribute('paused', ''); },
       }),
       element
     );
