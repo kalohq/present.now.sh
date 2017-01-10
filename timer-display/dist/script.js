@@ -11,6 +11,12 @@
       paused: PropTypes.bool.isRequired,
       defaultColor: PropTypes.string.isRequired,
       pause: PropTypes.func.isRequired,
+      colorBreakpoints: PropTypes.arrayOf(
+        PropTypes.shape({
+          color: PropTypes.string.isRequired,
+          seconds: PropTypes.number.isRequired,
+        })
+      ).isRequired,
     },
 
     getInitialState: function() {
@@ -52,6 +58,22 @@
         99
       )).slice(-2);
 
+      var currentBreakpoint = this.props.colorBreakpoints.reduce(function(
+        result, breakpoint
+      ) {
+        return (
+          breakpoint.seconds >= result.seconds &&
+          breakpoint.seconds <= secondsElapsed
+        ) ? (
+          breakpoint
+        ) : (
+          result
+        );
+      }, {
+        color: this.props.defaultColor,
+        seconds: 0,
+      });
+
       return (
         h('div', {
           className: ('timer-display›background' +
@@ -59,7 +81,7 @@
               ' timer-display›background»shown'
             ) : '')
           ),
-          style: { backgroundColor: this.props.defaultColor },
+          style: { backgroundColor: currentBreakpoint.color },
         },
           h('div', {
             className: 'timer-display›display',
@@ -83,11 +105,17 @@
   // THE CUSTOM ELEMENT
 
   var renderInElement = function(element) {
+    var hasColorBreakpoints = element.hasAttribute('color-breakpoints');
     ReactDOM.render(
       h(TimerDisplay, {
         paused: element.getAttribute('paused') !== null,
         defaultColor: element.getAttribute('default-color') || '#000000',
         pause: function() { element.setAttribute('paused', ''); },
+        colorBreakpoints: hasColorBreakpoints ? (
+          JSON.parse(element.getAttribute('color-breakpoints'))
+        ) : (
+          []
+        ),
       }),
       element
     );
@@ -103,7 +131,11 @@
     attribute, oldValue, newValue
   ) {
     if (
-      (attribute === 'paused' || attribute === 'default-color') &&
+      (
+        attribute === 'paused' ||
+        attribute === 'default-color' ||
+        attribute === 'color-breakpoints'
+      ) &&
       newValue !== oldValue
     ) {
       renderInElement(this);

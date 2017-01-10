@@ -48,4 +48,10 @@
   timerControls.addEventListener('start-timer', function() {
     timerDisplay.removeAttribute('paused');
   });
+
+  timerControls.addEventListener('color-breakpoints', function(event) {
+    timerDisplay.setAttribute('color-breakpoints',
+      JSON.stringify(event.detail.breakpoints)
+    );
+  });
 }());
