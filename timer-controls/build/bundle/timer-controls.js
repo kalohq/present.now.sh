@@ -6,19 +6,19 @@ registerElement({
   name: 'timer-controls',
   isBlock: true,
   lifecycle: {
-    attachedCallback: function () {
+    attachedCallback: function() {
       var element = this;
       var app = Elm.Main.embed(element, {
         initialColor: this.getAttribute('initial-color'),
       });
 
-      app.ports.sendInitialColor.subscribe(function (color) {
+      app.ports.sendInitialColor.subscribe(function(color) {
         element.dispatchEvent(new CustomEvent('initial-color', {
           detail: {color: color},
         }));
       });
 
-      app.ports.startTimer.subscribe(function () {
+      app.ports.startTimer.subscribe(function() {
         element.dispatchEvent(new Event('start-timer'));
       });
 
