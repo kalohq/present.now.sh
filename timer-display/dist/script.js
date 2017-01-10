@@ -9,6 +9,7 @@
   var TimerDisplay = React.createClass({
     propTypes: {
       paused: PropTypes.bool.isRequired,
+      defaultColor: PropTypes.string.isRequired,
     },
 
     getInitialState: function() {
@@ -49,8 +50,13 @@
       )).slice(-2);
 
       return (
-        h('div', null,
-          h('div', null,
+        h('div', {
+          className: 'background',
+          style: { backgroundColor: this.props.defaultColor },
+        },
+          h('div', {
+            className: 'display',
+          },
             minutes + ':' + seconds
           )
         )
@@ -65,6 +71,7 @@
     ReactDOM.render(
       h(TimerDisplay, {
         paused: element.getAttribute('paused') !== null,
+        defaultColor: element.getAttribute('default-color') || '#000000',
       }),
       element
     );
@@ -80,7 +87,7 @@
     attribute, oldValue, newValue
   ) {
     if (
-      attribute === 'paused' &&
+      (attribute === 'paused' || attribute === 'default-color') &&
       newValue !== oldValue
     ) {
       renderInElement(this);
