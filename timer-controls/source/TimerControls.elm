@@ -59,69 +59,102 @@ type Message
     | AddColorBreakpoint
     | SetBreakpointColor Int String
     | SetBreakpointMinutes Int String
+    | SetBreakpointSeconds Int String
 
 
 update : Message -> Model -> ( Model, Cmd message )
 update message model =
-    case message of
-        PickInitialColor color ->
-            { model
-                | initialColor = color
-            }
-                ! [ sendInitialColor color ]
+    let
+        updateColorBreakpoints colorBreakpoints baseModel =
+            { baseModel | colorBreakpoints = colorBreakpoints }
+                ! [ sendColorBreakpoints (Dict.values colorBreakpoints) ]
+    in
+        case message of
+            PickInitialColor color ->
+                { model
+                    | initialColor = color
+                }
+                    ! [ sendInitialColor color ]
 
-        ReceiveInitialColor maybeColor ->
-            update (PickInitialColor <| colorFromMaybe maybeColor) model
+            ReceiveInitialColor maybeColor ->
+                update (PickInitialColor <| colorFromMaybe maybeColor) model
 
-        StartTimer ->
-            model ! [ startTimer True ]
+            StartTimer ->
+                model ! [ startTimer True ]
 
-        AddColorBreakpoint ->
-            { model
-                | colorBreakpoints =
-                    Dict.insert
-                        model.nextColorBreakpointIndex
-                        { seconds = 0, color = model.initialColor }
-                        model.colorBreakpoints
-                , nextColorBreakpointIndex =
-                    model.nextColorBreakpointIndex + 1
-            }
-                ! []
+            AddColorBreakpoint ->
+                let
+                    colorBreakpoints =
+                        Dict.insert
+                            model.nextColorBreakpointIndex
+                            { seconds = 0, color = model.initialColor }
+                            model.colorBreakpoints
+                in
+                    updateColorBreakpoints colorBreakpoints
+                        { model
+                            | nextColorBreakpointIndex =
+                                model.nextColorBreakpointIndex + 1
+                        }
 
-        SetBreakpointColor index color ->
-            let
-                colorBreakpoints =
-                    Dict.update
-                        index
-                        (Maybe.map <| \breakpoint -> { breakpoint | color = color })
-                        model.colorBreakpoints
-            in
-                { model | colorBreakpoints = colorBreakpoints }
-                    ! [ sendColorBreakpoints (Dict.values colorBreakpoints) ]
+            SetBreakpointColor index color ->
+                let
+                    colorBreakpoints =
+                        Dict.update
+                            index
+                            (Maybe.map setColor)
+                            model.colorBreakpoints
 
-        SetBreakpointMinutes index rawMinutes ->
-            let
-                colorBreakpoints =
-                    Dict.update
-                        index
-                        (Maybe.map setBreakpointMinutes)
-                        model.colorBreakpoints
+                    setColor breakpoint =
+                        { breakpoint | color = color }
+                in
+                    updateColorBreakpoints colorBreakpoints model
 
-                setBreakpointMinutes breakpoint =
-                    { breakpoint
-                        | seconds =
-                            (breakpoint.seconds % 60)
-                                + (60 * (minutes breakpoint))
-                    }
+            SetBreakpointMinutes index rawMinutes ->
+                let
+                    colorBreakpoints =
+                        Dict.update
+                            index
+                            (Maybe.map setMinutes)
+                            model.colorBreakpoints
 
-                minutes breakpoint =
-                    String.filter Char.isDigit rawMinutes
-                        |> String.toInt
-                        |> Result.withDefault (breakpoint.seconds // 60)
-                        |> clamp 0 99
-            in
-                { model | colorBreakpoints = colorBreakpoints }
-                    ! [ sendColorBreakpoints (Dict.values colorBreakpoints) ]
+                    setMinutes breakpoint =
+                        { breakpoint
+                            | seconds =
+                                (breakpoint.seconds % 60)
+                                    + (60 * (minutes breakpoint))
+                        }
+
+                    minutes breakpoint =
+                        String.filter Char.isDigit rawMinutes
+                            |> String.toInt
+                            |> Result.withDefault (breakpoint.seconds // 60)
+                            |> clamp 0 99
+                in
+                    updateColorBreakpoints colorBreakpoints model
+
+            SetBreakpointSeconds index rawSeconds ->
+                let
+                    colorBreakpoints =
+                        Dict.update
+                            index
+                            (Maybe.map setSeconds)
+                            model.colorBreakpoints
+
+                    setSeconds breakpoint =
+                        { breakpoint
+                            | seconds =
+                                breakpoint.seconds
+                                    - (breakpoint.seconds % 60)
+                                    + seconds breakpoint
+                        }
+
+                    seconds breakpoint =
+                        String.filter Char.isDigit rawSeconds
+                            |> String.toInt
+                            |> Result.withDefault (breakpoint.seconds % 60)
+                            |> clamp 0 59
+                in
+                    updateColorBreakpoints colorBreakpoints model
 
 
 port sendInitialColor : String -> Cmd message
@@ -233,7 +266,7 @@ colorBreakpoint ( breakpointIndex, breakpoint ) =
             , text ":"
             , inlineInput
                 [ valueOnBlur (timeChunk <| breakpoint.seconds % 60)
-                  -- , onInput (SetBreakpointSeconds breakpointIndex)
+                , onInput (SetBreakpointSeconds breakpointIndex)
                 ]
                 []
             , text ", set the color to"

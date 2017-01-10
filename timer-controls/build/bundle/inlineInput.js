@@ -26,12 +26,15 @@ var InlineInput = function(elements) {
     }
   };
 
-  self.change = function(event) {
+  self.change = function(event, options) {
     var value = input.textContent;
 
     if (value !== root.value) {
       root.value = value;
-      root.dispatchEvent(new Event('input'));
+
+      if (!options || !options.initialPass) {
+        root.dispatchEvent(new Event('input'));
+      }
     }
   };
 
@@ -83,7 +86,7 @@ registerElement({
       var change = private.InlineInput.change;
       var receiveProp = private.InlineInput.receiveProp;
 
-      change({});
+      change({}, { initialPass: true });
       receiveProp('autofocus', null, this.getAttribute('autofocus'));
       receiveProp('value', null, this.getAttribute('value'));
     },
