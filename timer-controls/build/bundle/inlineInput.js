@@ -4,7 +4,6 @@ var _ = require('private-parts').createKey();
 var InlineInput = function(elements) {
   var root = elements.root;
   var input = elements.input;
-  var placeholder = elements.placeholder;
 
   var self = {};
 
@@ -16,23 +15,10 @@ var InlineInput = function(elements) {
         }
         break;
 
-      case 'placeholder':
-        if (newValue !== oldValue) {
-          placeholder.textContent = newValue;
-        }
-        break;
-
       case 'value':
         if (newValue !== input.textContent) {
           input.textContent = newValue;
         }
-
-        if (!newValue) {
-          self.showPlaceholder();
-        } else {
-          self.hidePlaceholder();
-        }
-
         break;
 
       default:
@@ -40,25 +26,8 @@ var InlineInput = function(elements) {
     }
   };
 
-  self.hidePlaceholder = function() {
-    placeholder.style.display = 'none';
-  };
-
-  self.showPlaceholder = function() {
-    placeholder.style.display = '';
-  };
-
   self.change = function(event) {
     var value = input.textContent;
-
-    var pressedKey = event.type === 'keydown';
-    var keyRemovesStuff = event.key === 'Delete' || event.key === 'Backspace';
-
-    if (!value && !(pressedKey && !keyRemovesStuff)) {
-      self.showPlaceholder();
-    } else {
-      self.hidePlaceholder();
-    }
 
     if (value !== root.value) {
       root.value = value;
@@ -87,15 +56,10 @@ registerElement({
       input.setAttribute('contenteditable', '');
       input.className = 'inline-input›input';
 
-      var placeholder = document.createElement('span');
-      placeholder.className = 'inline-input›placeholder';
-
       this.appendChild(input);
-      this.appendChild(placeholder);
       var elements = {
         root: this,
         input: input,
-        placeholder: placeholder,
       };
 
       var private = _(this);
@@ -105,12 +69,8 @@ registerElement({
       var change = private.InlineInput.change;
       this.addEventListener('click', function() { input.focus(); });
       input.addEventListener('focus', selectOnFocus);
-      input.addEventListener('keydown', change);
       input.addEventListener('keyup', change);
       input.addEventListener('paste', change);
-      input.addEventListener('blur', change);
-      input.addEventListener('focus', change);
-      placeholder.addEventListener('focus', selectOnFocus);
     },
 
     attachedCallback: function() {
@@ -121,7 +81,6 @@ registerElement({
 
       change({});
       receiveProp('autofocus', null, this.getAttribute('autofocus'));
-      receiveProp('placeholder', null, this.getAttribute('placeholder'));
       receiveProp('value', null, this.getAttribute('value'));
     },
 
@@ -134,9 +93,6 @@ registerElement({
 
 var style = document.createElement('style');
 style.textContent = (
-  'inline-input .inline-input›placeholder {' +
-    'opacity: 0.5;' +
-  '}' +
   'inline-input .inline-input›input:focus {' +
     'outline: none;' +
   '}'
