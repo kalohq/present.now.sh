@@ -6,7 +6,7 @@ registerElement({
   name: 'timer-controls',
   isBlock: true,
   lifecycle: {
-    createdCallback: function () {
+    attachedCallback: function () {
       var element = this;
       var app = Elm.Main.embed(element, {
         initialColor: this.getAttribute('initial-color'),
