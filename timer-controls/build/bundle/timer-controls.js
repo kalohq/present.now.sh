@@ -1,5 +1,7 @@
+require('./inlineInput');
+
 var Elm = require('./elm');
-var registerElement = require('./registerElement.js');
+var registerElement = require('./registerElement');
 var _ = require('private-parts').createKey();
 
 registerElement({

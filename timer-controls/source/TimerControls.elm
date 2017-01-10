@@ -1,49 +1,12 @@
-port module TimerControls
-    exposing
-        ( init
-        , view
-        , update
-        , subscriptions
-        , css
-        , namespace
-        , Message
-        , Model
-        , Flags
-        )
+port module TimerControls exposing (init, view, update, subscriptions, css, namespace, Message, Model, Flags)
 
-import Html exposing (text, h2, Html, div)
+import Html exposing (text, h2, Html, div, span)
 import Html.CssHelpers exposing (withNamespace)
-import Html.Polymer
-    exposing
-        ( paperSwatchPicker
-        , color
-        , paperButton
-        , ironIcon
-        , icon
-        )
+import Html.Polymer exposing (paperSwatchPicker, color, paperButton, ironIcon, icon)
+import Html.Custom exposing (inlineInput, autofocus, placeholder, value)
 import Html.Events exposing (on, onClick)
 import Json.Decode exposing (at, string, map)
-import Css
-    exposing
-        ( (.)
-        , rgb
-        , Snippet
-        , fontFamilies
-        , margin
-        , margin4
-        , marginRight
-        , fontWeight
-        , int
-        , inherit
-        , padding3
-        , px
-        , zero
-        , rem
-        , display
-        , block
-        , textAlign
-        , right
-        )
+import Css exposing ((.), rgb, Snippet, fontFamilies, margin, margin4, marginRight, fontWeight, int, inherit, padding3, px, zero, rem, display, block, textAlign, right, opacity, num, none, property, cursor, pointer, hover)
 
 
 -- MODEL
@@ -51,7 +14,19 @@ import Css
 
 type alias Model =
     { initialColor : String
+    , colorBreakpoints : List ColorBreakpoint
     }
+
+
+type ColorBreakpoint
+    = SettingTime
+        { minutes : String
+        , seconds : String
+        }
+    | AllSet
+        { color : String
+        , seconds : Int
+        }
 
 
 type alias Flags =
@@ -67,6 +42,7 @@ colorFromMaybe =
 init : Flags -> ( Model, Cmd message )
 init flags =
     ( { initialColor = colorFromMaybe flags.initialColor
+      , colorBreakpoints = []
       }
     , Cmd.none
     )
@@ -80,6 +56,7 @@ type Message
     = PickInitialColor String
     | ReceiveInitialColor (Maybe String)
     | StartTimer
+    | AddColorBreakpoint
 
 
 update : Message -> Model -> ( Model, Cmd message )
@@ -96,6 +73,15 @@ update message model =
 
         StartTimer ->
             model ! [ startTimer True ]
+
+        AddColorBreakpoint ->
+            { model
+                | colorBreakpoints =
+                    model.colorBreakpoints
+                        ++ [ SettingTime { minutes = "", seconds = "00" }
+                           ]
+            }
+                ! []
 
 
 port sendInitialColor : String -> Cmd message
@@ -127,12 +113,13 @@ namespace =
     "h28dne-"
 
 
+{ class } =
+    withNamespace namespace
+
+
 view : Model -> Html Message
 view model =
     let
-        { class } =
-            withNamespace namespace
-
         onColorPickerSelected messageWithColor =
             let
                 decode =
@@ -141,9 +128,9 @@ view model =
             in
                 on "color-picker-selected" decode
     in
-        div []
+        div [] <|
             [ h2 []
-                [ text "initial color"
+                [ text "start with this color"
                 ]
             , paperSwatchPicker
                 [ class [ SwatchPicker ]
@@ -151,21 +138,58 @@ view model =
                 , onColorPickerSelected PickInitialColor
                 ]
                 []
-            , div
-                [ class [ StartButtonContainer ]
-                ]
-                [ paperButton
-                    [ onClick StartTimer
-                    ]
-                    [ ironIcon
-                        [ icon "av:play-arrow"
-                        , class [ StartButtonIcon ]
+            ]
+                ++ List.concatMap colorBreakpoint model.colorBreakpoints
+                ++ [ h2 []
+                        [ span
+                            [ class [ NewColorBreakpointPlaceholder ]
+                            , onClick AddColorBreakpoint
+                            ]
+                            [ text "+ add color breakpoint"
+                            ]
                         ]
-                        []
-                    , text "Ready to roll"
+                   , div
+                        [ class [ StartButtonContainer ]
+                        ]
+                        [ paperButton
+                            [ onClick StartTimer
+                            ]
+                            [ ironIcon
+                                [ icon "av:play-arrow"
+                                , class [ StartButtonIcon ]
+                                ]
+                                []
+                            , text "Ready to roll"
+                            ]
+                        ]
+                   ]
+
+
+colorBreakpoint : ColorBreakpoint -> List (Html Message)
+colorBreakpoint breakpoint =
+    case breakpoint of
+        SettingTime { minutes, seconds } ->
+            [ h2 []
+                [ text "at "
+                , inlineInput
+                    ([ placeholder "mm"
+                     , value minutes
+                     ]
+                        ++ (autofocus True)
+                    )
+                    []
+                , text ":"
+                , inlineInput
+                    [ placeholder "ss"
+                    , value seconds
                     ]
+                    []
+                , text ", set the color to"
                 ]
             ]
+
+        _ ->
+            []
 
 
 
@@ -176,6 +200,8 @@ type Classes
     = SwatchPicker
     | StartButtonContainer
     | StartButtonIcon
+    | StartButtonIcon_Disabled
+    | NewColorBreakpointPlaceholder
 
 
 css : List Snippet
@@ -189,4 +215,15 @@ css =
         ]
     , (.) StartButtonIcon
         [ marginRight (Css.rem 0.2) ]
+    , (.) StartButtonIcon_Disabled
+        [ property "pointer-events" "none"
+        , opacity (num 0.3)
+        ]
+    , (.) NewColorBreakpointPlaceholder
+        [ opacity (num 0.5)
+        , cursor pointer
+        , hover
+            [ opacity (num 1)
+            ]
+        ]
     ]
