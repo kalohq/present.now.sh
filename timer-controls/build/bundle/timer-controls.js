@@ -13,10 +13,13 @@ registerElement({
       });
 
       app.ports.sendInitialColor.subscribe(function (color) {
-        var event = new CustomEvent('initial-color', {
+        element.dispatchEvent(new CustomEvent('initial-color', {
           detail: {color: color},
-        });
-        element.dispatchEvent(event);
+        }));
+      });
+
+      app.ports.startTimer.subscribe(function () {
+        element.dispatchEvent(new Event('start-timer'));
       });
 
       _(this).app = app;

@@ -4,6 +4,8 @@
     "font-roboto": "PolymerElements/font-roboto#^1.0.1",
     "paper-swatch-picker": "PolymerElements/paper-swatch-picker#^1.0.2",
     "webcomponentsjs": "webcomponents/webcomponentsjs#^0.7.23",
-    "react": "^15.4.2"
+    "react": "^15.4.2",
+    "paper-button": "^1.0.14",
+    "iron-icons": "^1.2.0"
   }
 }

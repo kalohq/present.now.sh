@@ -13,7 +13,14 @@ port module TimerControls
 
 import Html exposing (text, h2, Html, div)
 import Html.CssHelpers exposing (withNamespace)
-import Html.Polymer exposing (paperSwatchPicker, color)
+import Html.Polymer
+    exposing
+        ( paperSwatchPicker
+        , color
+        , paperButton
+        , ironIcon
+        , icon
+        )
 import Html.Events exposing (on)
 import Json.Decode exposing (at, string, map)
 import Css
@@ -23,12 +30,19 @@ import Css
         , Snippet
         , fontFamilies
         , margin
+        , margin4
+        , marginRight
         , fontWeight
         , int
         , inherit
         , padding3
         , px
         , zero
+        , rem
+        , display
+        , block
+        , textAlign
+        , right
         )
 
 
@@ -65,6 +79,7 @@ init flags =
 type Message
     = PickInitialColor String
     | ReceiveInitialColor (Maybe String)
+    | StartTimer
 
 
 update : Message -> Model -> ( Model, Cmd message )
@@ -79,8 +94,14 @@ update message model =
         ReceiveInitialColor maybeColor ->
             update (PickInitialColor <| colorFromMaybe maybeColor) model
 
+        StartTimer ->
+            model ! [ startTimer True ]
+
 
 port sendInitialColor : String -> Cmd message
+
+
+port startTimer : Bool -> Cmd message
 
 
 
@@ -130,6 +151,18 @@ view model =
                 , onColorPickerSelected PickInitialColor
                 ]
                 []
+            , div
+                [ class [ StartButtonContainer ]
+                ]
+                [ paperButton []
+                    [ ironIcon
+                        [ icon "av:play-arrow"
+                        , class [ StartButtonIcon ]
+                        ]
+                        []
+                    , text "Ready to roll"
+                    ]
+                ]
             ]
 
 
@@ -139,6 +172,8 @@ view model =
 
 type Classes
     = SwatchPicker
+    | StartButtonContainer
+    | StartButtonIcon
 
 
 css : List Snippet
@@ -146,4 +181,10 @@ css =
     [ (.) SwatchPicker
         [ margin (px -16)
         ]
+    , (.) StartButtonContainer
+        [ margin4 (Css.rem 2) zero zero zero
+        , textAlign right
+        ]
+    , (.) StartButtonIcon
+        [ marginRight (Css.rem 0.2) ]
     ]
