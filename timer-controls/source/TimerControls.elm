@@ -7,6 +7,8 @@ import Html.Custom exposing (inlineInput, autofocus, placeholder, value)
 import Html.Events exposing (on, onClick)
 import Json.Decode exposing (at, string, map)
 import Css exposing ((.), rgb, Snippet, fontFamilies, margin, margin4, marginRight, fontWeight, int, inherit, padding3, px, zero, rem, display, block, textAlign, right, opacity, num, none, property, cursor, pointer, hover)
+import String
+import Dict exposing (Dict)
 
 
 -- MODEL
@@ -14,7 +16,8 @@ import Css exposing ((.), rgb, Snippet, fontFamilies, margin, margin4, marginRig
 
 type alias Model =
     { initialColor : String
-    , colorBreakpoints : List ColorBreakpoint
+    , colorBreakpoints : Dict Int ColorBreakpoint
+    , nextColorBreakpointIndex : Int
     }
 
 
@@ -37,7 +40,8 @@ colorFromMaybe =
 init : Flags -> ( Model, Cmd message )
 init flags =
     ( { initialColor = colorFromMaybe flags.initialColor
-      , colorBreakpoints = []
+      , colorBreakpoints = Dict.empty
+      , nextColorBreakpointIndex = 0
       }
     , Cmd.none
     )
@@ -72,9 +76,12 @@ update message model =
         AddColorBreakpoint ->
             { model
                 | colorBreakpoints =
-                    model.colorBreakpoints
-                        ++ [ { seconds = 0, color = model.initialColor }
-                           ]
+                    Dict.insert
+                        model.nextColorBreakpointIndex
+                        { seconds = 0, color = model.initialColor }
+                        model.colorBreakpoints
+                , nextColorBreakpointIndex =
+                    model.nextColorBreakpointIndex + 1
             }
                 ! []
 
@@ -120,7 +127,7 @@ view model =
             ]
         , colorPicker PickInitialColor model.initialColor
         ]
-            ++ List.concatMap colorBreakpoint model.colorBreakpoints
+            ++ List.concatMap colorBreakpoint (Dict.toList model.colorBreakpoints)
             ++ [ h2 []
                     [ span
                         [ class [ NewColorBreakpointPlaceholder ]
@@ -167,26 +174,30 @@ colorPicker messageWithColor pickedColor =
             []
 
 
-colorBreakpoint : ColorBreakpoint -> List (Html Message)
-colorBreakpoint breakpoint =
-    [ h2 []
-        [ text "at "
-        , inlineInput
-            ([ placeholder "mm"
-             , value (toString <| breakpoint.seconds // 60)
-             ]
-                ++ (autofocus True)
-            )
-            []
-        , text ":"
-        , inlineInput
-            [ placeholder "ss"
-            , value (toString <| breakpoint.seconds % 60)
+colorBreakpoint : ( Int, ColorBreakpoint ) -> List (Html Message)
+colorBreakpoint ( id, breakpoint ) =
+    let
+        timeChunk number =
+            String.padLeft 2 '0' (toString number)
+    in
+        [ h2 []
+            [ text "at "
+            , inlineInput
+                ([ placeholder "mm"
+                 , value (timeChunk <| breakpoint.seconds // 60)
+                 ]
+                    ++ (autofocus True)
+                )
+                []
+            , text ":"
+            , inlineInput
+                [ placeholder "ss"
+                , value (timeChunk <| breakpoint.seconds % 60)
+                ]
+                []
+            , text ", set the color to"
             ]
-            []
-        , text ", set the color to"
         ]
-    ]
 
 
 
