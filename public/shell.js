@@ -21,18 +21,31 @@
     "#ff5722", // deepOrange
   ];
 
-  var headerColor = vibrantMaterialColors[
+  var initialColor = vibrantMaterialColors[
     Math.floor(Math.random() * vibrantMaterialColors.length)
   ];
 
-  window.presentNowSh = window.presentNowSh || {};
-
   var headerStyle = document.createElement('style');
   document.head.appendChild(headerStyle);
-  presentNowSh.setHeaderColor = function(color) {
-    headerStyle.textContent = '.control-panel h1{color:' + color + '}';
-  };
-  presentNowSh.setHeaderColor(headerColor);
 
-  presentNowSh.headerColor = headerColor;
+  var timerControls = document.querySelector('timer-controls');
+  var timerDisplay = document.querySelector('timer-display');
+
+  var setInitialColor = function(color) {
+    headerStyle.textContent = '.control-panel h1{color:' + color + '}';
+    timerDisplay.setAttribute('default-color', color);
+  };
+  setInitialColor(initialColor);
+
+
+  // WIRE UP CUSTOM ELEMENTS
+
+  timerControls.setAttribute('initial-color', initialColor);
+  timerControls.addEventListener('initial-color', function(event) {
+    setInitialColor(event.detail.color);
+  });
+
+  timerControls.addEventListener('start-timer', function() {
+    timerDisplay.removeAttribute('paused');
+  });
 }());

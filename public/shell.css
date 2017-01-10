@@ -2,6 +2,10 @@
   padding: 2rem;
 }
 
+.control-panel h1 {
+  color: transparent;
+}
+
 .control-panel .thin {
   font-weight: 300;
   letter-spacing: -0.021em;

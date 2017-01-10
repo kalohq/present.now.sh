@@ -8,11 +8,10 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
 
   <link rel="import" href="style-guide/style-guide.html" />
-
   <link rel="stylesheet" href="shell.css" />
-  <script src="shell.js"></script>
 
   <link rel="import" href="components/timer-controls/timer-controls.html" />
+  <link rel="import" async href="components/timer-display/timer-display.html" />
 </head>
 
 <body>
@@ -21,31 +20,21 @@
 
     <h2>here’s how it goes</h2>
     <p>
-      time your talk.<br />
-      set color breakpoints to know where you are.<br />
-      tap <strong>READY TO ROLL</strong>.<br />
+      set color breakpoints to know where you are in your talk.<br />
+      push the button.<br />
       never run overtime again.
     </p>
 
-    <timer-controls />
-    <script>(function() {
-      var timerControls = document.querySelector('timer-controls');
-      timerControls.setAttribute('initial-color', presentNowSh.headerColor);
-      timerControls.addEventListener('initial-color', function(event) {
-        presentNowSh.setHeaderColor(event.detail.color);
-      });
-    }());</script>
+    <timer-controls></timer-controls>
   </div>
 
+  <timer-display paused></timer-display>
+
+  <!-- PURE JS SHELL -->
+  <script async src="shell.js"></script>
+
+  <!-- WEB COMPONENTS POLYFILL -->
   <script>
     !function(){if("registerElement"in document&&"import"in document.createElement("link")&&"content"in document.createElement("template"));else{for(var e,n=document.querySelectorAll("link[rel=prefetch]"),r=0;r<n.length;r++)e=new XMLHttpRequest,e.open("GET",n[r].href),e.send();var t=document.createElement("script");t.src="vendor/webcomponentsjs/webcomponents-lite.min.js",document.body.appendChild(t)}}();
   </script>
-
-  <script>/*
-    window.addEventListener('HTMLImportsLoaded', function() {
-      var link = document.createElement('link');
-      link.rel = 'import';
-      link.href
-    })
-  */</script>
 </body>

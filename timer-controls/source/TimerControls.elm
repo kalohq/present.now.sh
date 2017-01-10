@@ -21,7 +21,7 @@ import Html.Polymer
         , ironIcon
         , icon
         )
-import Html.Events exposing (on)
+import Html.Events exposing (on, onClick)
 import Json.Decode exposing (at, string, map)
 import Css
     exposing
@@ -154,7 +154,9 @@ view model =
             , div
                 [ class [ StartButtonContainer ]
                 ]
-                [ paperButton []
+                [ paperButton
+                    [ onClick StartTimer
+                    ]
                     [ ironIcon
                         [ icon "av:play-arrow"
                         , class [ StartButtonIcon ]
