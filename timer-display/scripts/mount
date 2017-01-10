@@ -1,0 +1,12 @@
+#! /bin/bash -ex
+
+cd "$(dirname "$0")"/..
+bin=../node_modules/.bin
+
+"$bin"/budo \
+  --host=0.0.0.0 \
+  --live \
+  --port=3071 \
+  --dir=preview \
+  --watch-glob='**/*.{html,css,js}' \
+  "$@"
