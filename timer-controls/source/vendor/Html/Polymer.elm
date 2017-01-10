@@ -31,3 +31,13 @@ icon =
 color : String -> Attribute message
 color =
     attribute "color"
+
+
+colorList : String -> Attribute message
+colorList =
+    attribute "color-list"
+
+
+columnCount : String -> Attribute message
+columnCount =
+    attribute "column-count"

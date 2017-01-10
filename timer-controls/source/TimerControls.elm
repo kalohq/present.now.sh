@@ -2,7 +2,7 @@ port module TimerControls exposing (init, view, update, subscriptions, css, name
 
 import Html exposing (text, h2, Html, div, span)
 import Html.CssHelpers exposing (withNamespace)
-import Html.Polymer exposing (paperSwatchPicker, color, paperButton, ironIcon, icon)
+import Html.Polymer exposing (paperSwatchPicker, color, paperButton, ironIcon, icon, colorList, columnCount)
 import Html.Custom exposing (inlineInput, autofocus, placeholder, value)
 import Html.Events exposing (on, onClick)
 import Json.Decode exposing (at, string, map)
@@ -18,15 +18,10 @@ type alias Model =
     }
 
 
-type ColorBreakpoint
-    = SettingTime
-        { minutes : String
-        , seconds : String
-        }
-    | AllSet
-        { color : String
-        , seconds : Int
-        }
+type alias ColorBreakpoint =
+    { color : String
+    , seconds : Int
+    }
 
 
 type alias Flags =
@@ -78,7 +73,7 @@ update message model =
             { model
                 | colorBreakpoints =
                     model.colorBreakpoints
-                        ++ [ SettingTime { minutes = "", seconds = "00" }
+                        ++ [ { seconds = 0, color = model.initialColor }
                            ]
             }
                 ! []
@@ -119,8 +114,42 @@ namespace =
 
 view : Model -> Html Message
 view model =
+    div [] <|
+        [ h2 []
+            [ text "start with this color"
+            ]
+        , colorPicker PickInitialColor model.initialColor
+        ]
+            ++ List.concatMap colorBreakpoint model.colorBreakpoints
+            ++ [ h2 []
+                    [ span
+                        [ class [ NewColorBreakpointPlaceholder ]
+                        , onClick AddColorBreakpoint
+                        ]
+                        [ text "+ add color breakpoint"
+                        ]
+                    ]
+               , div
+                    [ class [ StartButtonContainer ]
+                    ]
+                    [ paperButton
+                        [ onClick StartTimer
+                        ]
+                        [ ironIcon
+                            [ icon "av:play-arrow"
+                            , class [ StartButtonIcon ]
+                            ]
+                            []
+                        , text "Ready to roll"
+                        ]
+                    ]
+               ]
+
+
+colorPicker : (String -> Message) -> String -> Html Message
+colorPicker messageWithColor pickedColor =
     let
-        onColorPickerSelected messageWithColor =
+        onColorPickerSelected =
             let
                 decode =
                     at [ "detail", "color" ] string
@@ -128,68 +157,36 @@ view model =
             in
                 on "color-picker-selected" decode
     in
-        div [] <|
-            [ h2 []
-                [ text "start with this color"
-                ]
-            , paperSwatchPicker
-                [ class [ SwatchPicker ]
-                , color model.initialColor
-                , onColorPickerSelected PickInitialColor
-                ]
-                []
+        paperSwatchPicker
+            [ class [ SwatchPicker ]
+            , color pickedColor
+            , onColorPickerSelected
+            , colorList """["#f44336", "#e91e63", "#9c27b0", "#673ab7", "#2196f3", "#3f51b5", "#00bcd4", "#03a9f4", "#4caf50", "#009688", "#cddc39", "#8bc34a", "#ffc107", "#ff9800", "#ff5722", "#000000"]"""
+            , columnCount "8"
             ]
-                ++ List.concatMap colorBreakpoint model.colorBreakpoints
-                ++ [ h2 []
-                        [ span
-                            [ class [ NewColorBreakpointPlaceholder ]
-                            , onClick AddColorBreakpoint
-                            ]
-                            [ text "+ add color breakpoint"
-                            ]
-                        ]
-                   , div
-                        [ class [ StartButtonContainer ]
-                        ]
-                        [ paperButton
-                            [ onClick StartTimer
-                            ]
-                            [ ironIcon
-                                [ icon "av:play-arrow"
-                                , class [ StartButtonIcon ]
-                                ]
-                                []
-                            , text "Ready to roll"
-                            ]
-                        ]
-                   ]
+            []
 
 
 colorBreakpoint : ColorBreakpoint -> List (Html Message)
 colorBreakpoint breakpoint =
-    case breakpoint of
-        SettingTime { minutes, seconds } ->
-            [ h2 []
-                [ text "at "
-                , inlineInput
-                    ([ placeholder "mm"
-                     , value minutes
-                     ]
-                        ++ (autofocus True)
-                    )
-                    []
-                , text ":"
-                , inlineInput
-                    [ placeholder "ss"
-                    , value seconds
-                    ]
-                    []
-                , text ", set the color to"
-                ]
-            ]
-
-        _ ->
+    [ h2 []
+        [ text "at "
+        , inlineInput
+            ([ placeholder "mm"
+             , value (toString <| breakpoint.seconds // 60)
+             ]
+                ++ (autofocus True)
+            )
             []
+        , text ":"
+        , inlineInput
+            [ placeholder "ss"
+            , value (toString <| breakpoint.seconds % 60)
+            ]
+            []
+        , text ", set the color to"
+        ]
+    ]
 
 
 
