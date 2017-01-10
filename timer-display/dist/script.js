@@ -86,7 +86,7 @@
   };
 
   TimerDisplayElement.detachedCallback = function() {
-    renderInElement(this);
+    ReactDOM.unmountComponentAtNode(this);
   };
 
   document.registerElement('timer-display', { prototype: TimerDisplayElement });
