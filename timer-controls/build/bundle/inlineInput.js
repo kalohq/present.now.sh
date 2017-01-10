@@ -15,8 +15,8 @@ var InlineInput = function(elements) {
         }
         break;
 
-      case 'value':
-        if (newValue !== input.textContent) {
+      case 'value-on-blur':
+        if (!input.textContent) {
           input.textContent = newValue;
         }
         break;
@@ -31,7 +31,7 @@ var InlineInput = function(elements) {
 
     if (value !== root.value) {
       root.value = value;
-      root.dispatchEvent(new Event('change'));
+      root.dispatchEvent(new Event('input'));
     }
   };
 
@@ -52,25 +52,29 @@ registerElement({
   name: 'inline-input',
   lifecycle: {
     createdCallback: function() {
+      var root = this;
       var input = document.createElement('span');
       input.setAttribute('contenteditable', '');
       input.className = 'inline-input›input';
 
-      this.appendChild(input);
+      root.appendChild(input);
       var elements = {
-        root: this,
+        root: root,
         input: input,
       };
 
-      var private = _(this);
+      var private = _(root);
       private.elements = elements;
       private.InlineInput = InlineInput(elements);
 
       var change = private.InlineInput.change;
-      this.addEventListener('click', function() { input.focus(); });
+      root.addEventListener('click', function() { input.focus(); });
       input.addEventListener('focus', selectOnFocus);
       input.addEventListener('keyup', change);
       input.addEventListener('paste', change);
+      input.addEventListener('blur', function() {
+        input.textContent = root.getAttribute('value-on-blur');
+      });
     },
 
     attachedCallback: function() {

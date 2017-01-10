@@ -3,12 +3,13 @@ port module TimerControls exposing (init, view, update, subscriptions, css, name
 import Html exposing (text, h2, Html, div, span)
 import Html.CssHelpers exposing (withNamespace)
 import Html.Polymer exposing (paperSwatchPicker, color, paperButton, ironIcon, icon, colorList, columnCount)
-import Html.Custom exposing (inlineInput, autofocus, placeholder, value)
-import Html.Events exposing (on, onClick)
+import Html.Custom exposing (inlineInput, autofocus, placeholder, valueOnBlur)
+import Html.Events exposing (on, onClick, onInput)
 import Json.Decode exposing (at, string, map)
 import Css exposing ((.), rgb, Snippet, fontFamilies, margin, margin4, marginRight, fontWeight, int, inherit, padding3, px, zero, rem, display, block, textAlign, right, opacity, num, none, property, cursor, pointer, hover)
 import String
 import Dict exposing (Dict)
+import Char
 
 
 -- MODEL
@@ -57,6 +58,7 @@ type Message
     | StartTimer
     | AddColorBreakpoint
     | SetBreakpointColor Int String
+    | SetBreakpointMinutes Int String
 
 
 update : Message -> Model -> ( Model, Cmd message )
@@ -93,6 +95,30 @@ update message model =
                         index
                         (Maybe.map <| \breakpoint -> { breakpoint | color = color })
                         model.colorBreakpoints
+            in
+                { model | colorBreakpoints = colorBreakpoints }
+                    ! [ sendColorBreakpoints (Dict.values colorBreakpoints) ]
+
+        SetBreakpointMinutes index rawMinutes ->
+            let
+                colorBreakpoints =
+                    Dict.update
+                        index
+                        (Maybe.map setBreakpointMinutes)
+                        model.colorBreakpoints
+
+                setBreakpointMinutes breakpoint =
+                    { breakpoint
+                        | seconds =
+                            (breakpoint.seconds % 60)
+                                + (60 * (minutes breakpoint))
+                    }
+
+                minutes breakpoint =
+                    String.filter Char.isDigit rawMinutes
+                        |> String.toInt
+                        |> Result.withDefault (breakpoint.seconds // 60)
+                        |> clamp 0 99
             in
                 { model | colorBreakpoints = colorBreakpoints }
                     ! [ sendColorBreakpoints (Dict.values colorBreakpoints) ]
@@ -198,14 +224,16 @@ colorBreakpoint ( breakpointIndex, breakpoint ) =
         [ h2 []
             [ text "at "
             , inlineInput
-                ([ value (timeChunk <| breakpoint.seconds // 60)
+                ([ valueOnBlur (timeChunk <| breakpoint.seconds // 60)
+                 , onInput (SetBreakpointMinutes breakpointIndex)
                  ]
                     ++ (autofocus True)
                 )
                 []
             , text ":"
             , inlineInput
-                [ value (timeChunk <| breakpoint.seconds % 60)
+                [ valueOnBlur (timeChunk <| breakpoint.seconds % 60)
+                  -- , onInput (SetBreakpointSeconds breakpointIndex)
                 ]
                 []
             , text ", set the color to"

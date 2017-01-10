@@ -26,6 +26,6 @@ placeholder =
     attribute "placeholder"
 
 
-value : String -> Attribute message
-value =
-    attribute "value"
+valueOnBlur : String -> Attribute message
+valueOnBlur =
+    attribute "value-on-blur"
