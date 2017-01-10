@@ -28,6 +28,23 @@
       font-size: 1.7rem;
       padding-bottom: 0.4rem;
     }
+
+    .skeleton {
+      position: relative;
+    }
+    .skeleton::before {
+      content: '';
+      display: inline-block;
+      vertical-align: baseline;
+      position: absolute;
+      width: 100%;
+      height: 1ex;
+      background: rgba(0, 0, 0, 0.1);
+      border-radius: 0.5ex;
+    }
+    .skeleton::after {
+      content: '\00A0';
+    }
   </style>
 
   <link rel="import" href="/vendor/font-roboto/roboto.html" />
