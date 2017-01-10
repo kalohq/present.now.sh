@@ -31,6 +31,8 @@
 
     .skeleton {
       position: relative;
+      -webkit-animation: 800ms ease-out 200ms skeleton both;
+      animation: 800ms ease-out 200ms skeleton both;
     }
     .skeleton::before {
       content: '';
@@ -44,6 +46,14 @@
     }
     .skeleton::after {
       content: '\00A0';
+    }
+    @-webkit-keyframes skeleton {
+      0% { opacity: 0; transform: translateY(-0.5em); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes skeleton {
+      0% { opacity: 0; transform: translateY(-0.5em); }
+      100% { opacity: 1; transform: translateY(0); }
     }
   </style>
 
