@@ -1,7 +1,7 @@
 (function() {
 
 
-  // Random material color of header
+  // COLOR OF HEADER
 
   var vibrantMaterialColors = [
     "#f44336", // red
