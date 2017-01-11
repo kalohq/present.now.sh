@@ -5,6 +5,7 @@
 
 /public/components/timer-controls/*
 !/public/components/timer-controls/timer-controls.html
+!/public/components/timer-controls/script.js
 
 /node_modules/
 /yarn-error.log

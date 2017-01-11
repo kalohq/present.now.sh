@@ -6,4 +6,4 @@ bin=../node_modules/.bin
 
 "$bin"/browserify \
   build/bundle/timer-controls.js \
-  --outfile=../public/components/timer-controls/script.js
+  --outfile=preview/bundle.js
