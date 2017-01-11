@@ -66,7 +66,8 @@
   const privateStuff = new Map();
 
   const prototype = Object.create(HTMLElement.prototype);
-  prototype.createdCallback: function() {
+
+  prototype.createdCallback = function() {
     const root = this;
     const input = document.createElement('span');
     input.setAttribute('contenteditable', '');
@@ -78,7 +79,8 @@
       input: input,
     };
 
-    const private = privateStuff.get(root);
+    const private = {};
+    privateStuff.set(root, private)
     private.elements = elements;
     private.InlineInput = InlineInput(elements);
 
@@ -92,7 +94,7 @@
     });
   },
 
-  prototype.attachedCallback: function() {
+  prototype.attachedCallback = function() {
     const private = privateStuff.get(this);
     const input = private.elements.input;
     const change = private.InlineInput.change;
@@ -103,11 +105,11 @@
     receiveProp('value', null, this.getAttribute('value'));
   },
 
-  prototype.attributeChangedCallback: function(attribute, oldValue, newValue) {
+  prototype.attributeChangedCallback = function(attribute, oldValue, newValue) {
     const private = privateStuff.get(this);
     private.InlineInput.receiveProp(attribute, oldValue, newValue);
   },
 
-  document.registerElement('inline-input', prototype);
+  document.registerElement('inline-input', { prototype: prototype });
   document.head.appendChild(style);
 }());
