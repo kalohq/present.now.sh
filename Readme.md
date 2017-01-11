@@ -45,13 +45,20 @@ Turned into quite a [blob of spaghetti code](./inline-input/inline-input.js). In
 
 
 
-## Frequently Asked Questions
+## <a id="/faq"></a>Frequently Asked Questions
 
 <h3 id="/faq/bower">why does the app weigh 1 MB?<br/>why bower?<br/>why do some parts of the app load slower than others?</h3>
 
 To roll this out as quickly as possible but still make it feel nice, we picked some ready-made Polymer elements. They’re super easy to use in any of the technologies we built the services (Elm, React, vanilla JS, vanilla HTML) – and they’re done nicely. They deliver native-like performance even on a crappy old low-end phone. The tradeoffs are: they weigh a ton, plus they use bower.
 
 But hey, look at it from the other side! Even though we pull down three runtimes (Polymer, React, Elm) and half the jungle, the app is usable immediately! As different bits and pieces arrive, parts of the app upgrade to become usable. That’s one of the great wins when using web components as microservices.
+
+<h3 id="/faq/requests">66 requests and you call is fast</h3>
+
+[present.now.sh](https://present.now.sh/) is served over HTTP/2, so unless you’re using an ancient browser it should be just about as fast as one request of the same size.
+
+The upside of having everything in separate requests lies in performance again. Halfway through loading time, you have half the app usable. If we served everything over a single request, we’d have to wait for everything to be downloaded, then parsed, then executed before we could start using the app.
+
 
 
 ## License
