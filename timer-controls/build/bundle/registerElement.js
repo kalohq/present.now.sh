@@ -1,9 +1,9 @@
 module.exports = function (options) {
-  var name = options.name;
-  var lifecycle = options.lifecycle;
-  var isBlock = options.isBlock || false;
+  const name = options.name;
+  const lifecycle = options.lifecycle;
+  const isBlock = options.isBlock || false;
 
-  var prototype = Object.create(HTMLElement.prototype);
+  const prototype = Object.create(HTMLElement.prototype);
   Object.keys(lifecycle).forEach(function(property) {
     prototype[property] = lifecycle[property];
   });
@@ -11,7 +11,7 @@ module.exports = function (options) {
   document.registerElement(name, { prototype: prototype });
 
   if (isBlock) {
-    var style = document.createElement('style');
+    const style = document.createElement('style');
     style.textContent = name + '{display:block}';
     document.head.appendChild(style);
   }

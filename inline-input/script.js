@@ -3,11 +3,11 @@
 
   // THE LOGIC
 
-  var InlineInput = function(elements) {
-    var root = elements.root;
-    var input = elements.input;
+  const InlineInput = function(elements) {
+    const root = elements.root;
+    const input = elements.input;
 
-    var self = {};
+    const self = {};
 
     self.receiveProp = function(prop, oldValue, newValue) {
       switch (prop) {
@@ -29,7 +29,7 @@
     };
 
     self.change = function(event, options) {
-      var value = input.textContent;
+      const value = input.textContent;
 
       if (value !== root.value) {
         root.value = value;
@@ -43,17 +43,17 @@
     return self;
   };
 
-  var selectOnFocus = function(event) {
+  const selectOnFocus = function(event) {
     requestAnimationFrame(function() {
-      var range = document.createRange();
+      const range = document.createRange();
       range.selectNodeContents(event.target);
-      var selection = window.getSelection();
+      const selection = window.getSelection();
       selection.removeAllRanges();
       selection.addRange(range);
     });
   };
 
-  var style = document.createElement('style');
+  const style = document.createElement('style');
   style.textContent = (
     'inline-input .inline-input›input:focus {' +
       'outline: none;' +
@@ -63,26 +63,26 @@
 
   // THE CUSTOM ELEMENT
 
-  var privateStuff = new Map();
+  const privateStuff = new Map();
 
-  var prototype = Object.create(HTMLElement.prototype);
+  const prototype = Object.create(HTMLElement.prototype);
   prototype.createdCallback: function() {
-    var root = this;
-    var input = document.createElement('span');
+    const root = this;
+    const input = document.createElement('span');
     input.setAttribute('contenteditable', '');
     input.className = 'inline-input›input';
 
     root.appendChild(input);
-    var elements = {
+    const elements = {
       root: root,
       input: input,
     };
 
-    var private = privateStuff.get(root);
+    const private = privateStuff.get(root);
     private.elements = elements;
     private.InlineInput = InlineInput(elements);
 
-    var change = private.InlineInput.change;
+    const change = private.InlineInput.change;
     root.addEventListener('click', function() { input.focus(); });
     input.addEventListener('focus', selectOnFocus);
     input.addEventListener('keyup', change);
@@ -93,10 +93,10 @@
   },
 
   prototype.attachedCallback: function() {
-    var private = privateStuff.get(this);
-    var input = private.elements.input;
-    var change = private.InlineInput.change;
-    var receiveProp = private.InlineInput.receiveProp;
+    const private = privateStuff.get(this);
+    const input = private.elements.input;
+    const change = private.InlineInput.change;
+    const receiveProp = private.InlineInput.receiveProp;
 
     change({}, { initialPass: true });
     receiveProp('autofocus', null, this.getAttribute('autofocus'));
@@ -104,7 +104,7 @@
   },
 
   prototype.attributeChangedCallback: function(attribute, oldValue, newValue) {
-    var private = privateStuff.get(this);
+    const private = privateStuff.get(this);
     private.InlineInput.receiveProp(attribute, oldValue, newValue);
   },
 

@@ -3,7 +3,7 @@
 
   // COLOR OF HEADER
 
-  var vibrantMaterialColors = [
+  const vibrantMaterialColors = [
     "#f44336", // red
     "#e91e63", // pink
     "#9c27b0", // purple
@@ -21,17 +21,17 @@
     "#ff5722", // deepOrange
   ];
 
-  var initialColor = vibrantMaterialColors[
+  const initialColor = vibrantMaterialColors[
     Math.floor(Math.random() * vibrantMaterialColors.length)
   ];
 
-  var headerStyle = document.createElement('style');
+  const headerStyle = document.createElement('style');
   document.head.appendChild(headerStyle);
 
-  var timerControls = document.querySelector('timer-controls');
-  var timerDisplay = document.querySelector('timer-display');
+  const timerControls = document.querySelector('timer-controls');
+  const timerDisplay = document.querySelector('timer-display');
 
-  var setInitialColor = function(color) {
+  const setInitialColor = function(color) {
     headerStyle.textContent = '.control-panel h1{color:' + color + '}';
     timerDisplay.setAttribute('default-color', color);
   };

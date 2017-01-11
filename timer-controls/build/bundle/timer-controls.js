@@ -1,14 +1,14 @@
-var Elm = require('./elm');
-var registerElement = require('./registerElement');
-var _ = require('private-parts').createKey();
+const Elm = require('./elm');
+const registerElement = require('./registerElement');
+const _ = require('private-parts').createKey();
 
 registerElement({
   name: 'timer-controls',
   isBlock: true,
   lifecycle: {
     attachedCallback: function() {
-      var element = this;
-      var app = Elm.Main.embed(element, {
+      const element = this;
+      const app = Elm.Main.embed(element, {
         initialColor: this.getAttribute('initial-color'),
       });
 

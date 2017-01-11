@@ -3,10 +3,10 @@
 
   // THE REACT COMPONENT
 
-  var h = React.createElement;
-  var PropTypes = React.PropTypes;
+  const h = React.createElement;
+  const PropTypes = React.PropTypes;
 
-  var TimerDisplay = React.createClass({
+  const TimerDisplay = React.createClass({
     propTypes: {
       paused: PropTypes.bool.isRequired,
       defaultColor: PropTypes.string.isRequired,
@@ -31,7 +31,7 @@
     tick: function() {
       requestAnimationFrame(this.tick);
 
-      var now = Date.now();
+      const now = Date.now();
 
       if (this.props.paused) {
         this.setState({
@@ -49,16 +49,16 @@
     },
 
     render: function() {
-      var component = this;
+      const component = this;
 
-      var secondsElapsed = Math.floor(this.state.millisecondsElapsed / 1000);
-      var seconds = ('00' + secondsElapsed % 60).slice(-2);
-      var minutes = ('00' + Math.min(
+      const secondsElapsed = Math.floor(this.state.millisecondsElapsed / 1000);
+      const seconds = ('00' + secondsElapsed % 60).slice(-2);
+      const minutes = ('00' + Math.min(
         Math.floor(secondsElapsed / 60),
         99
       )).slice(-2);
 
-      var currentBreakpoint = this.props.colorBreakpoints.reduce(function(
+      const currentBreakpoint = this.props.colorBreakpoints.reduce(function(
         result, breakpoint
       ) {
         return (
@@ -104,8 +104,8 @@
 
   // THE CUSTOM ELEMENT
 
-  var renderInElement = function(element) {
-    var hasColorBreakpoints = element.hasAttribute('color-breakpoints');
+  const renderInElement = function(element) {
+    const hasColorBreakpoints = element.hasAttribute('color-breakpoints');
     ReactDOM.render(
       h(TimerDisplay, {
         paused: element.getAttribute('paused') !== null,
@@ -121,7 +121,7 @@
     );
   };
 
-  var TimerDisplayElement = Object.create(HTMLElement.prototype);
+  const TimerDisplayElement = Object.create(HTMLElement.prototype);
 
   TimerDisplayElement.attachedCallback = function() {
     renderInElement(this);
