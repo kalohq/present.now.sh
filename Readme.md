@@ -10,7 +10,7 @@ This is a proof of concept for using web components as microservices on the fron
 # Make sure you have yarn installed
 scripts/install
 scripts/start --open
-</pre>
+```
 
 
 
