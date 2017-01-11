@@ -54,7 +54,7 @@ To roll this out as quickly as possible but still make it feel nice, we picked s
 
 But hey, look at it from the other side! Even though we pull down three runtimes (Polymer, React, Elm) and half the jungle, the app is usable immediately! As different bits and pieces arrive, parts of the app upgrade to become usable. That’s one of the great wins when using web components as microservices.
 
-<h3 id="/faq/requests">66 requests and you call is fast</h3>
+<h3 id="/faq/requests">66 requests and you call it fast?</h3>
 
 [present.now.sh](https://present.now.sh/) is served over HTTP/2, so unless you’re using an ancient browser it should be just about as fast as one request of the same size.
 
