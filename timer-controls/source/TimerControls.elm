@@ -5,9 +5,8 @@ import Html.CssHelpers exposing (withNamespace)
 import Html.Polymer exposing (paperSwatchPicker, color, paperButton, ironIcon, icon, colorList, columnCount)
 import Html.Custom exposing (inlineInput, autofocus, placeholder, valueOnBlur)
 import Html.Events exposing (on, onClick, onInput)
-import Html.Attributes exposing (style)
 import Json.Decode exposing (at, string, map)
-import Css exposing ((.), rgb, Snippet, fontFamilies, margin, margin4, marginRight, fontWeight, int, inherit, padding3, px, zero, rem, display, block, textAlign, right, opacity, num, none, cursor, pointer, hover, width, height, property, pct, borderRadius)
+import Css exposing ((.), rgb, Snippet, fontFamilies, margin, margin4, marginRight, fontWeight, int, inherit, padding3, px, zero, rem, display, block, textAlign, right, opacity, num, none, property, cursor, pointer, hover, width, height, property, pct, borderRadius)
 import String
 import Dict exposing (Dict)
 import Char
@@ -247,11 +246,7 @@ colorPicker messageWithColor pickedColor =
                 , colorList """["#f44336", "#e91e63", "#9c27b0", "#673ab7", "#2196f3", "#3f51b5", "#00bcd4", "#03a9f4", "#4caf50", "#009688", "#cddc39", "#8bc34a", "#ffc107", "#ff9800", "#ff5722", "#000000"]"""
                 , columnCount "8"
                 ]
-                [ div
-                    [ class [ SwatchPicker_Skeleton ]
-                    , style [ ( "background-color", pickedColor ) ]
-                    ]
-                    []
+                [ div [ class [ SwatchPicker_Skeleton ] ] []
                 ]
             ]
 
@@ -306,6 +301,7 @@ css =
         , height (px 24)
         , margin (px 16)
         , borderRadius (pct 50)
+        , property "background" "rgba(0, 0, 0, 0.1)"
         ]
     , (.) StartButtonContainer
         [ margin4 (Css.rem 2) zero zero zero
