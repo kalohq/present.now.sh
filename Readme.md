@@ -46,6 +46,14 @@ Turned into quite a [blob of spaghetti code](./inline-input/inline-input.js). In
 
 
 
+## <a id="/glue-layer"></a>[the glue layer](./public)
+
+The app shell is written in pure JS. All it’s about is [setting up input data](https://github.com/tomekwi/present.now.sh/blob/4a33854585b772095ac26f6854a5884136e9011c/public/shell.js#L4) and [wiring together the outputs and inputs of services](https://github.com/tomekwi/present.now.sh/blob/2d6f54a6e9142c8c66d54860680b2f0603667893/public/shell.js#L41).
+
+Wiring services together is incredibly simple.
+
+
+
 ## <a id="/faq"></a>Frequently Asked Questions
 
 <h3 id="/faq/bower">why does the app weigh 1 MB?<br/>why bower?<br/>why do some parts load slower than others?</h3>
