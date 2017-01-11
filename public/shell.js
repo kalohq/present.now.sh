@@ -1,7 +1,7 @@
 (function() {
 
 
-  // COLOR OF HEADER
+  // RANDOM INITIAL COLOR
 
   const vibrantMaterialColors = [
     "#f44336", // red
