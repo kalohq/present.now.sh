@@ -48,7 +48,7 @@ Turned into quite a [blob of spaghetti code](./inline-input/inline-input.js). In
 
 ## <a id="/faq"></a>Frequently Asked Questions
 
-<h3 id="/faq/bower">why does the app weigh 1 MB?<br/>why bower?<br/>why do some parts of the app load slower than others?</h3>
+<h3 id="/faq/bower">why does the app weigh 1 MB?<br/>why bower?<br/>why do some parts load slower than others?</h3>
 
 To roll this out as quickly as possible but still make it feel nice, we picked some ready-made Polymer elements. They’re super easy to use in any of the technologies we built the services (Elm, React, vanilla JS, vanilla HTML) – and they’re done nicely. They deliver native-like performance even on a crappy old low-end phone. The tradeoffs are: they weigh a ton, plus they use bower.
 
