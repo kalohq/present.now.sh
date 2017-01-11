@@ -9,6 +9,7 @@ This is a proof of concept for using web components as microservices on the fron
 <pre>
 yarn install
 scripts/bower install  # <a href="#/faq/polymer">what the frick?</a>
+scripts/start --open
 </pre>
 
 
