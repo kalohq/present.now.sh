@@ -7,7 +7,7 @@ import Html.Custom exposing (inlineInput, autofocus, placeholder, valueOnBlur)
 import Html.Events exposing (on, onClick, onInput)
 import Html.Attributes exposing (style)
 import Json.Decode exposing (at, string, map)
-import Css exposing ((.), rgb, Snippet, fontFamilies, margin, margin4, marginRight, fontWeight, int, inherit, padding3, px, zero, rem, display, block, textAlign, right, opacity, num, none, cursor, pointer, hover, width, height, property, pct, borderRadius)
+import Css exposing ((.), rgb, Snippet, fontFamilies, margin, margin4, marginRight, fontWeight, int, inherit, padding3, px, zero, rem, display, block, textAlign, right, opacity, num, none, cursor, pointer, hover, width, height, property, pct, borderRadius, selector, display, none, children, generalSiblings)
 import String
 import Dict exposing (Dict)
 import Char
@@ -322,6 +322,17 @@ css =
         , cursor pointer
         , hover
             [ opacity (num 1)
+            ]
+        ]
+    , selector "paper-swatch-picker"
+        [ children
+            [ selector "paper-menu-button"
+                [ generalSiblings
+                    [ (.) SwatchPicker_Skeleton
+                        [ display none
+                        ]
+                    ]
+                ]
             ]
         ]
     ]
