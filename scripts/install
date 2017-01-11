@@ -1,0 +1,8 @@
+#! /bin/bash -ex
+
+cd "$(dirname "$0")"/..
+bin=node_modules/.bin
+
+yarn install
+scripts/bower install
+git checkout bower_components
