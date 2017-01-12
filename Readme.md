@@ -54,7 +54,7 @@ Wiring services together is incredibly simple.
 
 
 
-## <a id="/faq"></a>Frequently Asked Questions
+## <a id="/faq"></a>frequently asked questions
 
 <h3 id="/faq/bower">why does the app weigh 1 MB?<br/>why bower?<br/>why do some parts load slower than others?</h3>
 
@@ -70,6 +70,6 @@ The upside of having everything in separate requests lies in performance again. 
 
 
 
-## License
+## license
 
-MIT © Tomek Wiszniewski, Lystable
+MIT © Lystable
